@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新手價值投資與財務報表解讀基礎 - LLM Wiki 教學簡報</title>
+    <!-- Reveal.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <!-- MathJax for KaTeX math formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b132b;
+            --card-bg: rgba(28, 37, 65, 0.95);
+            --accent-cyan: #48cae4;
+            --accent-green: #06d6a0;
+            --accent-yellow: #ffd166;
+            --accent-red: #ef476f;
+            --text-main: #f8f9fa;
+            --text-dim: #cbd5e1;
+            --border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        body, .reveal {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .slide-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 26px 36px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .badge-pill {
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            color: white;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 999px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .slide-number {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            font-family: monospace;
+        }
+
+        .slide-title {
+            font-size: 1.95rem !important;
+            font-weight: 800 !important;
+            color: #ffffff !important;
+            margin: 0 0 4px 0 !important;
+            letter-spacing: -0.5px;
+            text-transform: none !important;
+        }
+
+        .slide-subtitle {
+            font-size: 1.1rem !important;
+            color: var(--accent-cyan) !important;
+            font-weight: 500 !important;
+            margin-bottom: 14px !important;
+            text-transform: none !important;
+        }
+
+        .metaphor-tag {
+            background: rgba(72, 202, 228, 0.12);
+            border-left: 4px solid var(--accent-cyan);
+            color: #90e0ef;
+            padding: 8px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.92rem;
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .point-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 14px 0;
+            font-size: 1.02rem;
+            line-height: 1.65;
+            color: var(--text-main);
+        }
+
+        .point-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .bullet-icon {
+            color: var(--accent-green);
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+
+        .quote-card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-style: italic;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--accent-yellow);
+            margin-top: 15px;
+        }
+
+        /* 對比排版 */
+        .comp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .comp-col {
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .comp-col.retail {
+            background: rgba(239, 71, 111, 0.12);
+            border: 1px solid rgba(239, 71, 111, 0.3);
+        }
+
+        .comp-col.value {
+            background: rgba(6, 214, 160, 0.12);
+            border: 1px solid rgba(6, 214, 160, 0.3);
+        }
+
+        .comp-head {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        /* 公式卡片 */
+        .formula-box {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(72, 202, 228, 0.3);
+            border-radius: 14px;
+            padding: 16px 24px;
+            text-align: center;
+            margin: 14px 0;
+        }
+
+        .formula-title {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .formula-math {
+            font-size: 1.35rem;
+            color: var(--accent-yellow);
+        }
+
+        /* 三卡片網格 */
+        .three-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .card-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            background: rgba(72, 202, 228, 0.2);
+            color: var(--accent-cyan);
+            padding: 3px 8px;
+            border-radius: 6px;
+            width: fit-content;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: white;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            flex-grow: 1;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .card-analog {
+            font-size: 0.82rem;
+            color: var(--accent-yellow);
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 8px;
+        }
+
+        /* 資產負債表 T字平衡天平 (Slide 5) */
+        .compact-formula {
+            padding: 8px 16px !important;
+            margin: 6px 0 10px 0 !important;
+        }
+
+        .compact-formula .formula-math {
+            font-size: 1.15rem !important;
+        }
+
+        .balance-diagram {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: stretch;
+            margin: 10px 0;
+        }
+
+        .bal-col.assets {
+            background: rgba(72, 202, 228, 0.08);
+            border: 1px solid rgba(72, 202, 228, 0.35);
+            border-left: 5px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bal-equals {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-yellow);
+            padding: 0 4px;
+        }
+
+        .bal-right-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bal-subcard {
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bal-subcard.liab {
+            background: rgba(239, 71, 111, 0.08);
+            border: 1px solid rgba(239, 71, 111, 0.35);
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .bal-subcard.equity {
+            background: rgba(6, 214, 160, 0.08);
+            border: 1px solid rgba(6, 214, 160, 0.35);
+            border-left: 5px solid var(--accent-green);
+        }
+
+        .bal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.92rem;
+            margin-bottom: 4px;
+        }
+
+        .bal-header.cyan { color: #90e0ef; }
+        .bal-header.red { color: #ff9ebb; }
+        .bal-header.green { color: #a7f3d0; }
+
+        .bal-badge {
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .bal-badge.cyan { background: rgba(72, 202, 228, 0.25); color: #e0f2fe; }
+        .bal-badge.red { background: rgba(239, 71, 111, 0.25); color: #ffe4e6; }
+        .bal-badge.green { background: rgba(6, 214, 160, 0.25); color: #dcfce7; }
+
+        .bal-content {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.45;
+        }
+
+        .bal-item-row {
+            margin-bottom: 4px;
+        }
+
+        .bal-subtext {
+            font-size: 0.78rem;
+            color: var(--accent-yellow);
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 5px;
+            margin-top: 4px;
+        }
+
+        .compact-list {
+            margin: 8px 0 0 0 !important;
+            font-size: 0.92rem !important;
+            line-height: 1.45 !important;
+        }
+
+        .compact-list li {
+            margin-bottom: 6px !important;
+        }
+
+        /* 漏斗流 */
+        .funnel-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 14px 0;
+        }
+
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px 16px;
+            border-left: 5px solid var(--accent-cyan);
+        }
+
+        .funnel-num {
+            background: var(--accent-cyan);
+            color: #000;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            margin-right: 14px;
+        }
+
+        .funnel-name {
+            font-weight: 700;
+            width: 230px;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .funnel-desc {
+            color: var(--text-dim);
+            font-size: 0.88rem;
+        }
+
+        .warning-callout {
+            background: rgba(239, 71, 111, 0.15);
+            border: 1px solid var(--accent-red);
+            border-radius: 10px;
+            padding: 10px 16px;
+            color: #ff9ebb;
+            font-size: 0.92rem;
+            margin-top: 12px;
+        }
+
+        .golden-rule {
+            background: rgba(6, 214, 160, 0.15);
+            border: 1px solid var(--accent-green);
+            border-radius: 10px;
+            padding: 10px 16px;
+            color: #a7f3d0;
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* 鉤稽圖 */
+        .flow-chart-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        .flow-node {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .flow-node.highlight {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        .flow-node.success {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .flow-arrow {
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+
+        /* 護城河卡片網格 */
+        .moats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .moat-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+        }
+
+        .moat-type {
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .moat-desc {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* 規則清單與測驗 */
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .rule-item {
+            background: rgba(6, 214, 160, 0.08);
+            border-left: 3px solid var(--accent-green);
+            padding: 8px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.93rem;
+            color: #d1fae5;
+        }
+
+        .quiz-box {
+            background: rgba(255, 209, 102, 0.1);
+            border: 1px solid var(--accent-yellow);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+        }
+
+        .quiz-title {
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 4px;
+        }
+
+        .quiz-text {
+            color: #f1f5f9;
+            margin-bottom: 6px;
+        }
+
+        .quiz-ans {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        /* 頁尾 */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 14px;
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .citation-tag {
+            color: var(--accent-cyan);
+            font-family: monospace;
+        }
+
+        .nav-hint {
+            color: #64748b;
+        }
+        
+        .mt-2 { margin-top: 8px; }
+        .mt-3 { margin-top: 12px; }
+        .mb-3 { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">觀念啟蒙</span>
+                    <span class="slide-number">Slide 1 / 10</span>
+                </div>
+                <h2 class="slide-title">像合夥人一樣思考</h2>
+                <h4 class="slide-subtitle">新手價值投資與財務報表解讀基礎</h4>
+                <div class="slide-body">
+                    
+            <div class="hero-box">
+                <div class="metaphor-tag">💡 核心直覺：買股票不是買彩券，而是成為這家公司的合夥合夥人</div>
+                <ul class="point-list"><li><span class='bullet-icon'>✦</span> 股票代表對實體企業的部分所有權，而非螢幕跳動的隨機代碼</li><li><span class='bullet-icon'>✦</span> 短期的波動由情緒決定（投票機），長期的價值由獲利稱重（體重計）</li><li><span class='bullet-icon'>✦</span> 學會看懂財務報表，是保護自己辛辛苦苦賺來的血汗錢的第一步</li></ul>
+                <div class="quote-card">「如果你不打算持有一檔股票十年，那麼你甚至不要考慮持有它十分鐘。」—— 華倫·巴菲特</div>
+            </div>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[S01_value_investing_philosophy]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">心態防護</span>
+                    <span class="slide-number">Slide 2 / 10</span>
+                </div>
+                <h2 class="slide-title">情緒化的「市場先生」</h2>
+                <h4 class="slide-subtitle">別讓合夥人的躁鬱症指揮你的錢包</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：想像你家門口每天有個躁鬱症小販，高興時開天價，沮喪時跳樓大拍賣</div>
+            <div class="comp-grid">
+                <div class="comp-col retail">
+                    <div class="comp-head">❌ 散戶陷阱</div>
+                    <p>看到股價大跌就恐慌割肉，看到暴漲就興奮追高</p>
+                </div>
+                <div class="comp-col value">
+                    <div class="comp-head">✅ 價值投資人</div>
+                    <p>利用市場先生的低潮撿便宜，掌握主動交易權</p>
+                </div>
+            </div>
+            <ul class="point-list mt-3"><li><span class='bullet-icon'>✦</span> 市場先生（Mr. Market）每天都會報價，但他極其情緒化</li><li><span class='bullet-icon'>✦</span> 他是來為你『服務』的，不是來『指導』你的行動</li><li><span class='bullet-icon'>✦</span> 聰明投資者的武器：當他過度樂觀時賣出，當他恐慌賤賣時接手</li></ul>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[市場先生_Mr_Market]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">風險核心</span>
+                    <span class="slide-number">Slide 3 / 10</span>
+                </div>
+                <h2 class="slide-title">安全邊際（Margin of Safety）</h2>
+                <h4 class="slide-subtitle">葛拉漢投資哲學的最高基石</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：建造限重 1 萬磅的橋樑，工程師會按 3 萬磅標準去建造</div>
+            <div class="formula-box">
+                <div class="formula-title">葛拉漢安全邊際公式</div>
+                <div class="formula-math">$$\text{安全邊際率} = \frac{\text{內在價值} - \text{市場價格}}{\text{內在價值}} \times 100\%$$</div>
+            </div>
+            <ul class="point-list"><li><span class='bullet-icon'>✦</span> 承認自己不是預言家：永遠無法 100% 精準預測未來獲利</li><li><span class='bullet-icon'>✦</span> 用 6 折到 7 折的市場價格買入具備護城河的優良企業</li><li><span class='bullet-icon'>✦</span> 下檔有折扣緩衝吸收黑天鵝衝擊，上檔享受價值回歸的超額報酬</li></ul>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[安全邊際_Margin_of_Safety]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">財報入門</span>
+                    <span class="slide-number">Slide 4 / 10</span>
+                </div>
+                <h2 class="slide-title">看懂企業的三面鏡子</h2>
+                <h4 class="slide-subtitle">三大財務報表的生活化通識</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：把公司當成一個真人，看他的身家、成績單與錢包進出</div>
+            <div class="three-cards-grid">
+                <div class="card-item">
+                    <div class="card-badge">身家快照</div>
+                    <div class="card-title">資產負債表 (Balance Sheet)</div>
+                    <div class="card-desc">特定時間點有多少家產、欠了多少債？</div>
+                    <div class="card-analog">🔑 比喻：你的房產、存款與房貸清單</div>
+                </div>
+                
+                <div class="card-item">
+                    <div class="card-badge">營運成績單</div>
+                    <div class="card-title">損益表 (Income Statement)</div>
+                    <div class="card-desc">特定期間內賺了多少收入、花掉多少費用？</div>
+                    <div class="card-analog">🔑 比喻：每個月的薪資單與開銷明細</div>
+                </div>
+                
+                <div class="card-item">
+                    <div class="card-badge">血液流通</div>
+                    <div class="card-title">現金流量表 (Cash Flow)</div>
+                    <div class="card-desc">真金白銀到底進來了沒有？</div>
+                    <div class="card-analog">🔑 比喻：你的銀行存簿真實進出紀錄</div>
+                </div>
+                </div>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[三大財務報表基礎與鉤稽關係]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">報表 1/3</span>
+                    <span class="slide-number">Slide 5 / 10</span>
+                </div>
+                <h2 class="slide-title">資產負債表：企業的底牌有多厚？</h2>
+                <h4 class="slide-subtitle">理解會計恆等式與償債風險</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：資產 = 借來的錢（負債）+ 自己掏的錢（股東權益）</div>
+            <div class="formula-box compact-formula">
+                <div class="formula-math">$$\text{資產（Assets）} = \text{負債（Liabilities）} + \text{股東權益（Equity）}$$</div>
+            </div>
+            <div class="balance-diagram">
+                <!-- 左側：資產 -->
+                <div class="bal-col assets">
+                    <div class="bal-header cyan">
+                        <span>📦 資產（左側）</span>
+                        <span class="bal-badge cyan">資金去向</span>
+                    </div>
+                    <div class="bal-content">
+                        <div class="bal-item-row">
+                            <strong>流動資產：</strong>現金儲備、應收帳款、存貨
+                        </div>
+                        <div class="bal-item-row">
+                            <strong>非流動資產：</strong>廠房設備、專利無形資產
+                        </div>
+                    </div>
+                    <div class="bal-subtext">🔑 關鍵檢視：現金是否充足？應收帳款有無暴增塞貨？</div>
+                </div>
+
+                <!-- 中間：平衡天平符號 -->
+                <div class="bal-equals">=</div>
+
+                <!-- 右側：負債 + 股東權益 -->
+                <div class="bal-right-stack">
+                    <div class="bal-subcard liab">
+                        <div class="bal-header red">
+                            <span>💳 負債（右上）</span>
+                            <span class="bal-badge red">借來的錢</span>
+                        </div>
+                        <div class="bal-content">短期借款、應付帳款、長期公司債</div>
+                        <div class="bal-subtext">⚠️ 風險警示：短期負債過高易在升息/寒冬時周轉斷鏈</div>
+                    </div>
+                    <div class="bal-subcard equity">
+                        <div class="bal-header green">
+                            <span>🏦 股東權益（右下）</span>
+                            <span class="bal-badge green">自己的錢</span>
+                        </div>
+                        <div class="bal-content">股本、資本公積、保留盈餘（歷年真獲利累積）</div>
+                        <div class="bal-subtext">⭐ 體質指標：保留盈餘穩定累積，代表長年獲利具體沉澱</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="point-list compact-list"><li><span class='bullet-icon'>✦</span> 【資產端】檢驗現金儲備、應收帳款與存貨健康度</li><li><span class='bullet-icon'>✦</span> 【負債端】警惕短期借款過高，避免升息或寒冬時周轉不靈</li><li><span class='bullet-icon'>✦</span> 【權益端】觀察保留盈餘是否穩定積累，代表歷年獲利沉澱</li></ul>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[三大財務報表基礎與鉤稽關係]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">報表 2/3</span>
+                    <span class="slide-number">Slide 6 / 10</span>
+                </div>
+                <h2 class="slide-title">損益表：真能賺錢還是表面風光？</h2>
+                <h4 class="slide-subtitle">層層剖析毛利、營業利益與淨利</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：層層剝洋蔥：從營業額到真正能放進口袋的利潤</div>
+            <div class="funnel-container">
+                <div class="funnel-step step-1">
+                    <span class="funnel-num">1</span>
+                    <span class="funnel-name">營業收入 (Revenue)</span>
+                    <span class="funnel-desc">賣出商品收到的總流水</span>
+                </div>
+                
+                <div class="funnel-step step-2">
+                    <span class="funnel-num">2</span>
+                    <span class="funnel-name">營業毛利 (Gross Profit)</span>
+                    <span class="funnel-desc">扣除直接生產成本（反映產品定價權）</span>
+                </div>
+                
+                <div class="funnel-step step-3">
+                    <span class="funnel-num">3</span>
+                    <span class="funnel-name">營業利益 (Operating Profit)</span>
+                    <span class="funnel-desc">扣除推銷、管理、研發費用（反映本業獲利力）</span>
+                </div>
+                
+                <div class="funnel-step step-4">
+                    <span class="funnel-num">4</span>
+                    <span class="funnel-name">稅後淨利 (Net Income)</span>
+                    <span class="funnel-desc">加減業外收支並繳完所得稅後的最終盈餘</span>
+                </div>
+                </div>
+            <div class="warning-callout">⚠️ 警惕一次性賣地賣廠房造成的『暴賺假象』，務必鎖定本業營業利益！</div>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[三大財務報表基礎與鉤稽關係]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">報表 3/3</span>
+                    <span class="slide-number">Slide 7 / 10</span>
+                </div>
+                <h2 class="slide-title">現金流量表：獲利是意見，現金才是事實</h2>
+                <h4 class="slide-subtitle">透視自由現金流（Free Cash Flow, FCF）</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：損益表上的淨利可能是未兌現的欠條，只有現金流量表能證明錢真的入帳</div>
+            <div class="formula-box">
+                <div class="formula-title">自由現金流（FCF）黃金公式</div>
+                <div class="formula-math">$$\text{自由現金流（FCF）} = \text{營業現金流（OCF）} - \text{資本支出（CapEx）}$$</div>
+            </div>
+            <ul class="point-list"><li><span class='bullet-icon'>✦</span> 【營業現金流 OCF】本業實際收進來的現鈔，長期必須為正值且大於淨利</li><li><span class='bullet-icon'>✦</span> 【投資現金流 ICF】擴建廠房與購買先進設備的支出（健康公司通常為負）</li><li><span class='bullet-icon'>✦</span> 【自由現金流 FCF】扣除必要投資後，可以自由發給股東或抵禦寒冬的資金泉源</li></ul>
+            <div class="golden-rule">⭐ 盈餘品質金律：營業現金流（OCF）長年大於淨利，才是無摻水的真利潤！</div>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[自由現金流與盈餘品質]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">防弊鑑識</span>
+                    <span class="slide-number">Slide 8 / 10</span>
+                </div>
+                <h2 class="slide-title">三大報表如何互相照妖？</h2>
+                <h4 class="slide-subtitle">連環驗證與財報假帳偵測技巧</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：三家互不隸屬的證人，彼此證詞必須完全吻合</div>
+            <div class="flow-chart-box">
+                <div class="flow-node">【損益表】稅後淨利</div>
+                <div class="flow-arrow">➔ 扣除發放股息 ➔</div>
+                <div class="flow-node highlight">【資產負債表】保留盈餘</div>
+                <div class="flow-divider"></div>
+                <div class="flow-node">【損益表】淨利起點</div>
+                <div class="flow-arrow">➔ 調整折舊與營運資金 ➔</div>
+                <div class="flow-node success">【現金流量表】營業現金流</div>
+            </div>
+            <ul class="point-list mt-3"><li><span class='bullet-icon'>✦</span> 【鉤稽循環 1】淨利扣除股息後，滾入資產負債表的『保留盈餘』</li><li><span class='bullet-icon'>✦</span> 【鉤稽循環 2】現金流量表的期末現金，必須等於資產負債表上的現金</li><li><span class='bullet-icon'>✦</span> 【致命警訊】營收淨利年年漲，但營業現金流卻持續為負 $\rightarrow$ 高機率做假帳或塞貨通路！</li></ul>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[自由現金流與盈餘品質]]、[[S05_investor_pitfalls_and_risk]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">商業模式</span>
+                    <span class="slide-number">Slide 9 / 10</span>
+                </div>
+                <h2 class="slide-title">企業城堡的防線：經濟護城河</h2>
+                <h4 class="slide-subtitle">巴菲特賴以安睡的五大結構性屏障</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：高利潤會引來成群競爭鯊魚，沒有護城河的城堡必定失守</div>
+            <div class="moats-grid">
+                <div class="moat-card">
+                    <div class="moat-type">無形資產</div>
+                    <div class="moat-desc">強大品牌定價權（可口可樂、蘋果）或關鍵專利牌照</div>
+                </div>
+            
+                <div class="moat-card">
+                    <div class="moat-type">轉換成本</div>
+                    <div class="moat-desc">更換供應商代價極高（企業 ERP、微軟辦公生態）</div>
+                </div>
+            
+                <div class="moat-card">
+                    <div class="moat-type">網絡效應</div>
+                    <div class="moat-desc">用戶越多價值呈幾何增長（Visa、Mastercard、Google）</div>
+                </div>
+            
+                <div class="moat-card">
+                    <div class="moat-type">成本優勢</div>
+                    <div class="moat-desc">無人能匹敵的供應鏈或良率規模（Costco、台積電）</div>
+                </div>
+            
+                <div class="moat-card">
+                    <div class="moat-type">有效規模</div>
+                    <div class="moat-desc">天然寡占市場，容納不下第二家（鐵路管線、天然氣網）</div>
+                </div>
+            </div>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[巴菲特經濟護城河]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="slide-section" data-transition="slide-in fade-out">
+            <div class="slide-container">
+                <div class="slide-header">
+                    <span class="badge-pill">實戰守則</span>
+                    <span class="slide-number">Slide 10 / 10</span>
+                </div>
+                <h2 class="slide-title">便宜也是陷阱？新手的防守心法</h2>
+                <h4 class="slide-subtitle">遠離價值陷阱與三大實戰生存守則</h4>
+                <div class="slide-body">
+                    
+            <div class="metaphor-tag">💡 核心直覺：不要因為一把菜刀掉在地上很便宜，就試圖用手去接下墜的刀子</div>
+            <div class="warning-callout mb-3">⚠️ 【價值陷阱】低 P/E、低 P/B，但公司面臨不可逆的永久衰退（如柯達膠卷、百視達）</div>
+            <div class="rules-list"><div class='rule-item'>🛡️ 【原則一：堅守能力圈】看不懂業務模式的熱門概念題材，堅決不碰</div><div class='rule-item'>🛡️ 【原則二：分散配置】單一個股不超過投資組合 15%~20%，防範黑天鵝</div><div class='rule-item'>🛡️ 【原則三：零借貸槓桿】不用融資買股票，市場先生發瘋時你才能冷靜旁觀</div></div>
+            <div class="quiz-box mt-3">
+                <div class="quiz-title">🎯 即席檢驗小測驗：</div>
+                <div class="quiz-text">如果一家公司本益比只有 4 倍、殖利率 9%，但營業現金流已連續三年為負數，你該買進嗎？</div>
+                <div class="quiz-ans">答：不可！這是標準的「假性便宜價值陷阱」，現金流枯竭代表有周轉或做假帳危機。</div>
+            </div>
+            
+                </div>
+                <div class="slide-footer">
+                    <span class="citation-tag">Wiki 知識來源：[[價值陷阱與新手防禦策略]]</span>
+                    <span class="nav-hint">使用鍵盤 [ ➔ ] 或 [ ␣ 空白鍵 ] 前往下一頁</span>
+                </div>
+            </div>
+        </section>
+        
+        </div>
+    </div>
+
+    <!-- Reveal.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'slide',
+            keyboard: true
+        });
+    </script>
+</body>
+</html>

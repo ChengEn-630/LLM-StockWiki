@@ -1,0 +1,26 @@
+[
+  {
+    "iteration": 1,
+    "total_score": 88.2,
+    "scores": {
+      "fact_grounding": 96.0,
+      "pedagogy_access": 75.0,
+      "slide_structure": 94.0
+    },
+    "critiques": [
+      "第 [7] 頁缺少生活化比喻（Metaphor），可能增加初學者的認知門檻。"
+    ],
+    "approved": false
+  },
+  {
+    "iteration": 2,
+    "total_score": 95.2,
+    "scores": {
+      "fact_grounding": 96.0,
+      "pedagogy_access": 95.0,
+      "slide_structure": 94.0
+    },
+    "critiques": [],
+    "approved": true
+  }
+]
